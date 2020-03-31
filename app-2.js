@@ -6,30 +6,38 @@ var inputScoreNumber;
 init();
 
 // Hide the dice at the Start of the Game
-document.querySelector('.dice').style.display = 'none';
+document.querySelector('.dice-1').style.display = 'none';
+document.querySelector('.dice-2').style.display = 'none';
 
 // Add event listener to 'Roll Dice' Button : Roll Dice Button
 document.querySelector('.btn-roll').addEventListener('click', function () {
     if (gamePlaying) {
         // Roll the Dice to Get a Random Number 
-        var dice = Math.floor(Math.random() * 6) + 1;
-        console.log('Current Value of Dice = ' + dice);
+        var diceOne = Math.floor(Math.random() * 6) + 1;
+        console.log('Current Value of Dice One = ' + diceOne);
+
+        var diceTwo = Math.floor(Math.random() * 6) + 1;
+        console.log('Current Value of Dice Two = ' + diceTwo);
 
         //console.log('Current Dice Value = ' + dice);
 
         // Display the Dice Image and the Result
-        var diceObject = document.querySelector('.dice');
-        diceObject.style.display = 'block';
-        diceObject.src = 'dice-' + dice + '.png';
+        var diceObjectOne = document.querySelector('.dice-1');
+        diceObjectOne.style.display = 'block';
+        diceObjectOne.src = 'dice-' + diceOne + '.png';
+
+        var diceObjectTwo = document.querySelector('.dice-2');
+        diceObjectTwo.style.display = 'block';
+        diceObjectTwo.src = 'dice-' + diceTwo + '.png';
 
         // Update the round Score (if the rolled number is not 1)
-        if (dice === 6 && previousDice === 6) {
+        if (diceOne === 6 && diceTwo === 6) {
             scores[activePlayer] = 0;
             document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
             switctPlayers();
-        } else if (dice > 1) {
+        } else if (diceOne > 1 && diceTwo > 1) {
             // Add the Scores 
-            roundScore += dice;
+            roundScore = roundScore + diceOne + diceTwo;
             document.querySelector('#current-' + activePlayer).textContent = roundScore;
         } else {
 
@@ -37,8 +45,8 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
             switctPlayers();
         }
 
-        previousDice = dice;
-        console.log('Previous Dice Value = ' + previousDice);
+        //previousDice = dice;
+        //console.log('Previous Dice Value = ' + previousDice);
     }
 
 });
@@ -68,7 +76,8 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
         // Check If a Player Has Won
         if (scores[activePlayer] >= checkScore) {
             document.querySelector('#name-' + activePlayer).textContent = 'Winner!!!';
-            document.querySelector('.dice').style.display = 'none';
+            document.querySelector('.dice-1').style.display = 'none';
+            document.querySelector('.dice-2').style.display = 'none';
             document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
             document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
             gamePlaying = false;
@@ -94,7 +103,8 @@ function switctPlayers() {
     document.querySelector('.player-0-panel').classList.toggle('active');
     document.querySelector('.player-1-panel').classList.toggle('active');
 
-    document.querySelector('.dice').style.display = 'none';
+    document.querySelector('.dice-1').style.display = 'none';
+    document.querySelector('.dice-2').style.display = 'none';
 }
 
 // Initilize Function
@@ -121,7 +131,7 @@ function init() {
     document.querySelector('.player-0-panel').classList.add('active');
 
     // Get the Final Score from the user
-    document.querySelector('.btn-primary').addEventListener('click', function () {
+    document.querySelector('.btn-outline-success').addEventListener('click', function () {
         inputScoreNumber = document.querySelector('.final-score').value;
         console.log(inputScoreNumber);
     });
